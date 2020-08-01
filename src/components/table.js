@@ -1,31 +1,59 @@
 import React, { Component } from 'react';
 
 class Table extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 0,
+      perPage: 25,
+    }
+  }
+
+  handlePrevious = () => {
+    this.setState((prevState) => ({ page: prevState.page - 1}));
+  }
+
+  handleNext = () => {
+    this.setState((prevState) => ({ page: prevState.page + 1}));
+  }
+
   render() {
   const headers = this.props.columns.map((header) => {
     return <th key={header.name}>{ header.name }</th>;
   });
 
-  const bodyRows = this.props.routes.map((route) => {
+  const start = this.state.page * this.state.perPage;
+
+  const bodyRows = this.props.rows.slice(start, start + this.state.perPage).map((route) => {
     const data = this.props.columns.map((colData) => {
-      const value = route[colData.property];
-      return <td key={colData.property + value}>{ value }</td>;
+      const prop = colData.property;
+      const value = route[prop];
+      return <td key={colData.property + value}>{ this.props.format(prop, value) }</td>;
     });
 
     return <tr key={Object.values(route).join(':')}>{ data }</tr>;
   });
 
     return (
-      <table className={this.props.className}>
-        <thead>
-          <tr>
-            { headers }
-          </tr>
-        </thead>
-        <tbody>
-          { bodyRows }
-        </tbody>
-      </table>
+      <div>
+        <table className={this.props.className}>
+          <thead>
+            <tr>
+              { headers }
+            </tr>
+          </thead>
+          <tbody>
+            { bodyRows }
+          </tbody>
+        </table>
+        <div className="pagination">
+          <p>Showing {start + 1 }-{start + bodyRows.length} of {this.props.rows.length} routes.</p>
+          <p>
+            <button disabled={this.state.page === 0} onClick={this.handlePrevious}>Previous Page</button>
+            <button disabled={start + this.state.perPage >= this.props.rows.length} onClick={this.handleNext}>Next Page</button>
+          </p>
+        </div>
+      </div>
     )
   }
 }
