@@ -5,8 +5,11 @@ class Table extends Component {
     super(props);
     this.state = {
       page: 0,
-      perPage: 25,
     }
+  }
+
+  static defaultProps = {
+    perPage: 25,
   }
 
   handlePrevious = () => {
@@ -22,9 +25,9 @@ class Table extends Component {
     return <th key={header.name}>{ header.name }</th>;
   });
 
-  const start = this.state.page * this.state.perPage;
+  const start = this.state.page * this.props.perPage;
 
-  const bodyRows = this.props.rows.slice(start, start + this.state.perPage).map((route) => {
+  const bodyRows = this.props.rows.slice(start, start + this.props.perPage).map((route) => {
     const data = this.props.columns.map((colData) => {
       const prop = colData.property;
       const value = route[prop];
@@ -50,7 +53,7 @@ class Table extends Component {
           <p>Showing {start + 1 }-{start + bodyRows.length} of {this.props.rows.length} routes.</p>
           <p>
             <button disabled={this.state.page === 0} onClick={this.handlePrevious}>Previous Page</button>
-            <button disabled={start + this.state.perPage >= this.props.rows.length} onClick={this.handleNext}>Next Page</button>
+            <button disabled={start + this.props.perPage >= this.props.rows.length} onClick={this.handleNext}>Next Page</button>
           </p>
         </div>
       </div>
