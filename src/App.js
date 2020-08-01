@@ -25,8 +25,8 @@ class App extends Component {
           <h1 className="title">Airline Routes</h1>
         </header>
         <section>
+          <Table className="routes-table" rows={DATA.routes} columns={columns} format={this.format} />
         </section>
-        <Table className="routes-table" rows={DATA.routes} columns={columns} format={this.format} />
       </div>
     );
   }

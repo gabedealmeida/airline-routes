@@ -46,7 +46,15 @@ select {
   width: 90%;
 }
 
-.pagination a {
+.pagination {
+  margin: 1em;
+}
+
+.pagination p {
+  margin: .5em;
+}
+
+.pagination button {
   margin: 0 .5em;
 }
 

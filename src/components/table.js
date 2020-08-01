@@ -52,12 +52,16 @@ class Table extends Component {
         <div className="pagination">
           <p>Showing {start + 1 }-{start + bodyRows.length} of {this.props.rows.length} routes.</p>
           <p>
-            <button disabled={this.state.page === 0} onClick={this.handlePrevious}>Previous Page</button>
-            <button disabled={start + this.props.perPage >= this.props.rows.length} onClick={this.handleNext}>Next Page</button>
+            <button disabled={this.state.page === 0} onClick={this.handlePrevious}>
+              Previous Page
+            </button>
+            <button disabled={start + this.props.perPage >= this.props.rows.length} onClick={this.handleNext}>
+              Next Page
+            </button>
           </p>
         </div>
       </div>
-    )
+    );
   }
 }
 
