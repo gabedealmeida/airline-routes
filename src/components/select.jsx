@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class Select extends Component {
-
   handleOnChange = (e) => {
     e.preventDefault();
     const target = e.target.value;

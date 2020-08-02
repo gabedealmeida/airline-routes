@@ -3,6 +3,7 @@ import './App.css';
 import DATA from './data.js';
 import Table from './components/table';
 import Select from './components/select';
+import Map from './components/map';
 
 class App extends Component {
   defaultState = {
@@ -78,6 +79,7 @@ class App extends Component {
           <h1 className="title">Airline Routes</h1>
         </header>
         <section>
+        <Map routes={filteredRoutes} />
           <p>
             Show routes on
             <Select options={filteredAirlines} valueKey="id" titleKey="name"
