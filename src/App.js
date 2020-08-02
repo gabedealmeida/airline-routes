@@ -23,6 +23,10 @@ class App extends Component {
     }
   }
 
+  clearFilters = () => {
+    this.setState(this.defaultState);
+  }
+
   airlineSelected = (value) => {
     if (value !== 'all') {
       value = Number(value);
@@ -66,6 +70,8 @@ class App extends Component {
       return filteredRoutesByAirline.some( (route) => route.src === airport.code || route.dest === airport.code );
     });
 
+    const defaultsSelected = this.state.airline === this.defaultState.airline && this.state.airport === this.defaultState.airport;
+
     return (
       <div className="app">
         <header className="header">
@@ -79,11 +85,13 @@ class App extends Component {
             />
             flying out of
             <Select options={filteredAirports} valueKey="code" titleKey="name"
-              allTitle="All Airports" value={this.state.airport} onSelect={this.airportSelected} />
-
-            <Table className="routes-table" rows={filteredRoutes} columns={columns} format={this.format}
+              allTitle="All Airports" value={this.state.airport} onSelect={this.airportSelected}
             />
+            <button onClick={this.clearFilters} disabled={defaultsSelected}>Show All Routes</button>
           </p>
+
+          <Table className="routes-table" rows={filteredRoutes} columns={columns} format={this.format}
+            />
         </section>
       </div>
     );
