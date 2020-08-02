@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import DATA from './data.js';
 import Table from './components/table';
+import Select from './components/select';
 
 class App extends Component {
   defaultState = {
@@ -22,18 +23,12 @@ class App extends Component {
     }
   }
 
-  handleOnChange = (e) => {
-    const target = e.target.value;
-    let airline;
-
-    if (target === 'all') {
-      airline = 'all';
-    } else {
-      const id = Number(target);
-      airline = this.format('airline', id);
+  airlineSelected = (value) => {
+    if (value !== 'all') {
+      value = Number(value);
     }
-  
-    this.setState({airline: airline});
+
+    this.setState({airline: value});
   }
 
   render() {
@@ -43,13 +38,9 @@ class App extends Component {
       {name: 'Destination Airport', property: 'dest'},
     ];
 
-    const airlineOptions = DATA.airlines.map((airline) => {
-      return <option disabled={this.state.airline !== airline.name && this.state.airline !== 'all'} key={airline.id} value={airline.id}>{airline.name}</option>;
-    });
-
     const filteredRoutes = DATA.routes.filter((route) => {
       if (this.state.airline === 'all') return route;
-      return this.format('airline', route.airline) === this.state.airline;
+      return route.airline === this.state.airline;
     });
 
     return (
@@ -58,10 +49,8 @@ class App extends Component {
           <h1 className="title">Airline Routes</h1>
         </header>
         <section>
-          <select name="airline" onChange={this.handleOnChange}>
-            <option key={'all'} value="all">All Airlines</option>
-            { airlineOptions }
-          </select>
+        <Select options={DATA.airlines} valueKey="id" titleKey="name"
+          allTitle="All Airlines" value={this.state.airline} onSelect={this.airlineSelected} />
           <Table className="routes-table" rows={filteredRoutes} columns={columns} format={this.format} />
         </section>
       </div>
