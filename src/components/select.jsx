@@ -9,15 +9,16 @@ class Select extends Component {
   }
 
   render() {
-    const options = this.props.options.map((airline) => {
-      return <option disabled={this.props.value !== airline.id && this.props.value !== 'all'} key={airline.id} value={airline.id}>{airline.name}</option>;
+    const options = this.props.options.map((option) => {
+      const value = option[this.props.valueKey];
+      return <option disabled={this.props.value !== value && this.props.value !== 'all'} key={value} value={value}>{option[this.props.titleKey]}</option>;
     });
 
     return (
       <select value={this.props.value} onChange={this.handleOnChange}>
         <option key="all" value="all">{this.props.allTitle}</option>
         { options }
-    </select>
+      </select>
     )
   }
 }
