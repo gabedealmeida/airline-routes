@@ -17,7 +17,7 @@ class Map extends Component {
               <g key={route.airline + route.src + route.dest}>
                 <circle className="source" cx={sourceAirport.long} cy={sourceAirport.lat}>
                   <title>{sourceAirport.name}</title>
-                </circle> 
+                </circle>
                 <circle className="destination" cx={destinationAirport.long} cy={destinationAirport.lat}>
                   <title>{destinationAirport.name}</title>
                 </circle>
@@ -25,7 +25,6 @@ class Map extends Component {
               </g>
             );
           })}
-
         </g>
       </svg>
     );
